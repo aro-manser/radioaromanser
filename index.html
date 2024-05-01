@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neumorphic Radio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .radio-container {
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 60px #bebebe, 
+                        -20px -20px 60px #ffffff;
+            padding: 20px;
+            text-align: center;
+            display: none; /* Ocultar el reproductor inicialmente */
+        }
+
+        .station-buttons {
+            margin-bottom: 20px;
+        }
+
+        .station-buttons button {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 20px;
+            padding: 15px 30px;
+            margin: 0 10px;
+            cursor: pointer;
+            box-shadow: 10px 10px 30px #bebebe, 
+                        -10px -10px 30px #ffffff;
+        }
+
+        .station-buttons button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .controls button {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 20px;
+            padding: 15px 30px;
+            margin: 0 10px;
+            cursor: pointer;
+            box-shadow: 10px 10px 30px #bebebe, 
+                        -10px -10px 30px #ffffff;
+        }
+
+        .controls button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .volume-bar {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            box-shadow: 10px 10px 30px #bebebe, 
+                        -10px -10px 30px #ffffff;
+            overflow: hidden;
+        }
+
+        .volume-bar-inner {
+            width: 100%;
+            height: 20px;
+            background-color: #007bff;
+            transition: width 0.2s ease-in-out;
+        }
+
+        .radio-image {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para el botón de mostrar/ocultar reproductor */
+        #toggle-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 5px 5px 15px #bebebe;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón para mostrar/ocultar reproductor -->
+    <button id="toggle-button" onclick="togglePlayer()">Reproductor</button>
+
+    <!-- Contenedor del reproductor -->
+    <div class="radio-container" id="radio-container">
+        <audio id="radio-player" src="" controls></audio>
+        
+        <div class="station-buttons">
+            <button onclick="playStation('rock1')">Rock Station 1</button>
+            <button onclick="playStation('rock2')">Rock Station 2</button>
+            <button onclick="playStation('rock3')">Rock Station 3</button>
+        </div>
+        <div class="controls">
+            <button onclick="play()">Play</button>
+            <button onclick="pause()">Pause</button>
+            <button onclick="stop()">Stop</button>
+        </div>
+        <div class="volume-bar">
+            <div class="volume-bar-inner"></div>
+        </div>
+    </div>
+
+    <script>
+        const radioPlayer = document.getElementById('radio-player');
+        const volumeBar = document.querySelector('.volume-bar-inner');
+        const radioContainer = document.getElementById('radio-container');
+        
+        // Función para mostrar u ocultar el reproductor
+        function togglePlayer() {
+            if (radioContainer.style.display === "none") {
+                radioContainer.style.display = "block";
+            } else {
+                radioContainer.style.display = "none";
+            }
+        }
+
+        radioPlayer.addEventListener('volumechange', function() {
+            const volume = radioPlayer.volume;
+            volumeBar.style.width = (volume * 100) + '%';
+        });
+
+        function playStation(station) {
+            switch(station) {
+                case 'rock1':
+                    radioPlayer.src = 'https://22833.live.streamtheworld.com/STEREOREYAAC.aac?pname=StandardPlayerV4&pversion=4.19.2-044&dist=triton-web&tdsdk=js-2.9&swm=false&banners=300x250&burst-time=15&sbmid=b85b46b9-3ea7-4844-941d-ccfcc075eb60';
+                    break;
+                case 'rock2':
+                    radioPlayer.src = 'http://s1.nexuscast.com:8135/;';
+                    break;
+                case 'rock3':
+                    radioPlayer.src = 'https://strmreg.1.fm/top40_mobile_mp3';
+                    break;
+            }
+        }
+
+        function play() {
+            radioPlayer.play();
+        }
+
+        function pause() {
+            radioPlayer.pause();
+        }
+
+        function stop() {
+            radioPlayer.pause();
+            radioPlayer.currentTime = 0;
+        }
+    </script>
+</body>
+</html>
